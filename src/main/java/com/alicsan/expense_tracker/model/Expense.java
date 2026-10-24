@@ -2,20 +2,32 @@ package com.alicsan.expense_tracker.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Expense {
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @ManyToOne
     private Category category;
     private BigDecimal amount;
     private LocalDate date;
     private String description;
 
+    protected Expense() {
+    }
 
-    public Expense(long id, Category category, BigDecimal amount, LocalDate date, String description) {
-        this.id = id;
+    public Expense(Category category, BigDecimal amount, String description) {
         this.category = category;
         this.amount = amount;
-        this.date = date;
+        this.date = LocalDate.now(ZoneId.of("Europe/Berlin"));
         this.description = description;
     }
 
