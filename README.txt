@@ -1,24 +1,36 @@
 Expense Tracker
 ===============
 
-A Spring Boot application for tracking expenses and organizing them by category.
+A Spring Boot application for tracking expenses with a fixed set of categories.
 
 Current status
 --------------
-The project is in its initial setup phase. It includes the application bootstrap,
-expense and category domain models, PostgreSQL configuration, and a simple home
-endpoint.
+The project provides REST endpoints for expenses and uses a fixed set of
+expense categories. PostgreSQL stores the data.
 
-Requirements
-------------
-- Java 26
-- PostgreSQL
+Run with Docker
+---------------
+Requirements: Docker Desktop (or Docker Engine with the Compose plugin).
 
-Configuration
--------------
-Create a PostgreSQL database named `expense_tracker` and update the datasource
-settings in `src/main/resources/application.properties` with your local database
-URL, username, and password.
+1. Copy `.env.example` to `.env` and change `DB_PASSWORD` if you want a
+   different local database password.
+2. Start the app and database:
+
+     docker compose up --build
+
+3. Open http://localhost:8080/ or call the API. For example, list expenses:
+
+     curl http://localhost:8080/expenses
+
+The PostgreSQL database is stored in a named Docker volume and survives
+container restarts. Stop the containers with Ctrl+C, or run
+`docker compose down`. To also delete the local database data, run
+`docker compose down -v`.
+
+Local development without Docker
+---------------------------------
+Install Java 26 and PostgreSQL, then set `DB_URL`, `DB_USER`, and `DB_PASSWORD`
+as environment variables if your local database uses different settings.
 
 Run locally
 -----------
@@ -28,8 +40,7 @@ macOS/Linux:
 Windows:
   mvnw.cmd spring-boot:run
 
-Then open http://localhost:8080/ in your browser. The current endpoint responds
-with `Welcome home`.
+Then open http://localhost:8080/ in your browser.
 
 Test
 ----
@@ -38,5 +49,5 @@ Test
 Planned features
 ----------------
 - Create, view, update, and delete expenses
-- Organize expenses into categories
+- Filter expenses by category
 - Track totals and spending history
